@@ -49,14 +49,16 @@ public class LoginFilter implements Filter {
 			request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
 			
 			if ((user != null)) {
-				hresp.sendRedirect("/supermercado/faces/filtrarMercadorias.xhtml");
+				// hresp.sendRedirect("/supermercado/faces/filtrarMercadorias.xhtml"); DESCOMENTAR PARA FUNCIONAR NO LOCALHOST
+				hresp.sendRedirect("/faces/filtrarMercadorias.xhtml");
 				return;
 			}
 		}else if((request.getAttribute(FILTER_APPLIED) == null) && paginaAtual != null) {
 			request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
 			
 			if ((user == null)) {
-				hresp.sendRedirect("/supermercado/faces/login.xhtml");
+				//hresp.sendRedirect("/supermercado/faces/login.xhtml"); DESCOMENTAR PARA FUNCIONAR NO LOCALHOST
+				hresp.sendRedirect("/faces/login.xhtml");
 				return;
 			}
 		}

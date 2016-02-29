@@ -1,0 +1,68 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form styleClass="form-horizontal">
+		<fieldset>
+			<legend>
+				<h3>
+					<h:outputText value="#{msg['label.supermercado']}" />
+					<small> <h:outputText value="#{subtitle}" /></small>
+				</h3>
+			</legend>
+			<div class="control-group">
+				<label class="control-label"><h:outputText
+						value="#{msg['label.supermercado.supermercado']}" /></label>
+				<div class="controls">
+					<h:inputText id="super"
+						value="#{supermercadoMB.supermercado.supermercado}"
+						label="#{msg['label.supermercado.supermercado']}" required="true"
+						styleClass="input-large">
+						<f:validateLength minimum="2" maximum="60" />
+					</h:inputText>
+					<p:focus for="super" />
+				</div>
+			</div>
+		</fieldset>
+
+		<p:dialog id="dialog" header="#{msg['dialog.emexecucao.titulo']}"
+			widgetVar="dlg" dynamic="true" modal="true">
+			<h:outputText value="#{msg['dialog.emexecucao.aguarde']}" />
+		</p:dialog>
+
+
+		<div class="control-group">
+			<div class="controls">
+				<p:commandButton value="#{msg['button.salvar']}"
+					action="#{supermercadoMB.salvar}" styleClass="btn btn-success"
+					onclick="PF('dlg').show();" oncomplete="PF('dlg').hide();"
+					rendered="#{supermercadoMB.supermercado != null}" />
+				<p:button value="#{msg['button.cancelar']}"
+					outcome="listaSupermercados" styleClass="btn" />
+				<p:commandButton value="#{msg['button.excluir']}"
+					onclick="PF('confirmation').show()"
+					rendered="#{supermercadoMB.supermercado.id != null}" immediate="true"
+					styleClass="btn btn-danger" />
+			</div>
+		</div>
+
+
+
+		<p:confirmDialog id="confirmDialog"
+			message="#{msg['excluir.supermercado.confirma']}"
+			header="#{msg['excluir.supermercado']}" severity="alert"
+			widgetVar="confirmation">
+			<p:commandButton id="confirm" value="#{msg['confirma.sim']}"
+				update="messages" oncomplete="PF('confirmation').hide()"
+				action="#{supermercadoMB.remover}" />
+			<p:commandButton id="decline" value="#{msg['confirma.nao']}"
+				onclick="PF('confirmation').hide()" type="button" />
+		</p:confirmDialog>
+
+		<p:messages id="messages" showDetail="false" autoUpdate="true"
+			closable="true" />
+
+	</h:form>
+</ui:fragment>

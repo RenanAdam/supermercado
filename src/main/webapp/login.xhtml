@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <link type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="resources/css/prime.css" />
+	
+		<title><h:outputText value="#{msg['page.title.app']}" /> - <ui:insert name="pageTitle"></ui:insert></title>
+	</h:head>
+       
+    <h:body>
+    	<h:form>
+    		<p:panelGrid columns="2" style="position:absolute;top:40%;left:40%">
+    			<f:facet name="header">
+    				<p:row>
+    					<p:column colspan="2">Login</p:column>
+    				</p:row>
+    			</f:facet>
+    			<h:outputText value="Usuário" />
+    			<h:inputText value="#{usuarioMB.user}" id="user" />
+    			<h:outputText value="Senha" />
+    			<p:password value="#{usuarioMB.pswd}" />
+    			<h:outputText value="" />
+    			<p:commandButton value="Login" action="#{usuarioMB.verificaUsuario()}"></p:commandButton>
+    		</p:panelGrid>
+    		<p:focus for="user" />
+    	</h:form>
+    </h:body>
+    
+</html>

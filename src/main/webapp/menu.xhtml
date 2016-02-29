@@ -1,0 +1,61 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ul class="nav nav-list" style="padding-top: 15px;">
+		
+		<li style="text-align: center"><em><h:outputText value="#{usuarioMB.getUsuario().getUsuario()}" /></em></li>
+		<li class="divider"></li>
+		
+		<li><em><h:outputText value="#{msg['label.mercadorias']}" /></em></li>
+
+		<li class="#{empty param.active || param.active == 'listaMerca' ? 'active' : ''}">
+			<h:link outcome="filtrarMercadorias">
+				<h:outputText value="#{msg['menu.lista']}" escape="false" />
+				<f:param name="active" value="listaMerca" />
+            </h:link>
+		</li>
+		<li class="#{param.active == 'incluirMerca' ? 'active' : ''}">
+			<h:link outcome="incluirMercadoria">
+				<h:outputText value="#{msg['menu.incluir']}" escape="false" />
+				<f:param name="active" value="incluirMerca" />
+			</h:link>
+		</li>
+			
+	
+		
+		<li><em><h:outputText value="#{msg['label.supermercados']}" /></em></li>
+		
+		<li class="#{param.active == 'listaSuper' ? 'active' : ''}">
+			<h:link outcome="listaSupermercados">
+				<h:outputText value="#{msg['menu.lista']}" escape="false" />
+				<f:param name="active" value="listaSuper" />
+            </h:link>
+		</li>
+		<li class="#{param.active == 'incluirSuper' ? 'active' : ''}">
+			<h:link outcome="incluirSupermercado">
+				<h:outputText value="#{msg['menu.incluir']}" escape="false" />
+				<f:param name="active" value="incluirSuper" />
+			</h:link>
+		</li>
+		
+		
+		<li class="divider"></li>
+		<li class="#{param.active == 'sobre' ? 'active' : ''}">
+			<h:link outcome="sobre">
+				<h:outputText value="#{msg['menu.sobre']}" escape="false" />
+				<f:param name="active" value="sobre" />
+			</h:link>
+		</li>
+	
+		<h:form>
+			<li><!-- USANDO FORM PARA QUE O METODO NAO SEJA EXECUTADO AO CARREGAR, FAZENDO O LOGOUT INDEVIDO -->
+				<h:commandLink action="#{usuarioMB.sair()}" value="#{msg['menu.sair']}" escape="false" />
+			</li>
+		</h:form>
+	
+	</ul>
+
+</ui:fragment>

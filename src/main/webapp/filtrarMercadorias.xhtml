@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="pageTitle">
+		<h:outputText value="#{msg['page.title.incluir.mercadoria']}" />
+	</ui:define>
+
+	<!--  f:metadata>
+		<f:event type="preRenderView" listener="#{mercadoriaMB.incluir}" />
+	</f:metadata -->
+	
+	<ui:define name="content">
+
+		<h:form styleClass="form-horizontal">
+			<fieldset>
+				<legend>
+					<h3>
+						<h:outputText value="#{msg['label.mercadoria']}" />
+						<small> <h:outputText value="#{msg['label.listagem']}" /></small>
+					</h3>
+				</legend>
+				
+				
+				<div class="control-group">
+					<label class="control-label"><h:outputText
+							value="#{msg['label.mercadoria.supermercado']}" /></label>
+					<div class="controls">
+						<p:selectOneMenu id="super"  value="#{mercadoriaMB.filtroIdSupermercado}" style="width:200px">
+	                		<f:selectItem itemLabel="Selecione supermercado" itemValue="" noSelectionOption="true" />
+	                		<f:selectItems value="#{supermercadoMB.supermercados}" var="super" itemLabel="#{super.supermercado}" itemValue="#{super.id}" />
+	            		</p:selectOneMenu>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label"><h:outputText
+							value="#{msg['label.data.inicio']}" /></label>
+					<div class="controls">
+	        			<p:calendar id="data_inicial" value="#{mercadoriaMB.filtroDataInicial}" pattern="dd/MM/yyyy" mask="true" 
+	        			 showOn="both" readonlyInput="true" navigator="true" required="true">
+	        			</p:calendar>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label"><h:outputText
+							value="#{msg['label.data.fim']}" /></label>
+					<div class="controls">
+	        			<p:calendar id="data_final" value="#{mercadoriaMB.filtroDataFinal}" pattern="dd/MM/yyyy" mask="true" 
+	        			 showOn="both" readonlyInput="true" navigator="true" required="true">
+	        			</p:calendar>
+					</div>
+				</div>
+				
+			</fieldset>
+
+			<div class="control-group">
+				<div class="controls">
+					<p:commandButton value="#{msg['button.pesquisar']}"
+						actionListener="#{mercadoriaMB.filtrarListaMercadorias}" styleClass="btn btn-success" onclick="PF('dlg').show();" oncomplete="PF('dlg').hide();" update="dataTable" />
+				</div>
+			</div>
+			
+			<p:dialog id="dialog" header="#{msg['dialog.emexecucao.titulo']}" widgetVar="dlg" dynamic="true" modal="true">  
+		    	<h:outputText value="#{msg['dialog.emexecucao.aguarde']}" />  
+			</p:dialog>
+			
+			<p:confirmDialog id="confirmDialog" message="#{msg['excluir.mercadoria.confirma']}"
+				header="#{msg['excluir.mercadoria']}" severity="alert" widgetVar="confirmation">  
+		        <p:commandButton id="confirm" value="#{msg['confirma.sim']}" update="messages" 
+		        	oncomplete="PF('confirmation').hide()" action="#{mercadoriaMB.remover}" />  
+		        <p:commandButton id="decline" value="#{msg['confirma.nao']}" 
+		        	onclick="PF('confirmation').hide()" type="button" />
+		    </p:confirmDialog>
+		
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+			
+			
+			
+			
+			<p:dataTable id="dataTable" var="mercadoria"
+				value="#{mercadoriaMB.mercadorias}" paginator="true" rows="20"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="20,40,60,80,100,150,200,300,400,500,1000" sortBy="#{mercadoria.data}" sortOrder="ASCENDING" style="width:800px">
+				
+				<p:column style="width:25px">
+					<f:facet name="header">
+						<h:outputText value="Seq" />
+					</f:facet>
+					<h:outputText value="#{mercadoriaMB.getPosicaoListaMercadorias(mercadoria)}" >
+					</h:outputText>
+				</p:column>
+				
+	
+				<p:column sortBy="#{mercadoria.data}"  style="width:80px" >
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.mercadoria.data']}" />
+					</f:facet>
+					<h:outputText value="#{mercadoria.data}" >
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</p:column>
+	
+	
+				<p:column sortBy="#{mercadoriaMB.getSupermercadoPeloId(mercadoria.id_supermercado)}" style="width:100px">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.mercadoria.supermercado']}" />
+					</f:facet>
+					<h:outputText value="#{mercadoriaMB.getSupermercadoPeloId(mercadoria.id_supermercado)}" />
+				</p:column>
+
+	
+				<p:column sortBy="#{mercadoria.descricao}" filterBy="#{mercadoria.descricao}" filterMatchMode="contains" style="width:150px">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.mercadoria.descricao']}" />
+					</f:facet>
+					<h:link outcome="editarMercadoria" value="#{mercadoria.descricao}"
+						title="#{msg['label.editar']} #{mercadoria.descricao}">
+						<f:param name="id" value="#{mercadoria.id}" />
+					</h:link>
+				</p:column>
+	
+				<p:column sortBy="#{mercadoria.unidade}" style="width:80px">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.mercadoria.unidade']}"  />
+					</f:facet>
+					<h:outputText value="#{mercadoria.unidade}" />
+				</p:column>
+	
+	
+				<p:column sortBy="#{mercadoria.quantidade}" style="width:40px">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.mercadoria.quantidade']}" />
+					</f:facet>
+					<h:outputText value="#{mercadoria.quantidade}" />
+				</p:column>
+	
+				<p:column sortBy="#{mercadoria.preco}" style="width:80px">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.mercadoria.preco']}" />
+					</f:facet>
+					<h:outputText value="#{mercadoria.preco}">
+						<f:convertNumber type="currency"  />
+					</h:outputText>
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header" style="width:80px">
+						<h:outputText value="#{msg['label.mercadoria.total']}" />
+					</f:facet>
+					<h:outputText value="#{mercadoriaMB.calculaValorTotal(mercadoria)}">
+						<f:convertNumber type="currency"  />
+					</h:outputText>
+				</p:column>
+				
+				<p:columnGroup type="footer">
+		            <p:row>
+		                <p:column colspan="7" style="text-align:right" footerText="Total " />
+		                <p:column footerText="#{mercadoriaMB.calculaTotalGeral()}" />
+		            </p:row>
+		        </p:columnGroup>
+	
+			</p:dataTable>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="pageTitle">
+		<h:outputText value="#{msg['page.title.lista.supermercado']}" />
+	</ui:define>
+
+	<ui:define name="content">
+		<div style="border-bottom: 1px solid #E5E5E5;">
+			<h3>
+				<h:outputText value="#{msg['label.supermercados']}" />
+				<small> <h:outputText value="#{msg['label.listagem']}" /></small>
+			</h3>
+		</div>
+		<h:form>
+			<p:dataTable id="dataTable" var="supermercado"
+				value="#{supermercadoMB.supermercados}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,30,40,50" sortBy="#{supermercado.supermercado}" sortOrder="ASCENDING" style="width:700px">
+				
+				<p:column style="width:25px">
+					<f:facet name="header">
+						<h:outputText value="Seq" />
+					</f:facet>
+					<h:outputText value="#{supermercadoMB.getPosicaoListaSupermercados(supermercado)}" >
+					</h:outputText>
+				</p:column>
+	
+	
+				<p:column sortBy="#{supermercado.supermercado}" style="width:200px">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.supermercado.supermercado']}" />
+					</f:facet>
+					<!--  h:outputText value="#{supermercado.supermercado}" /-->
+					<h:link outcome="editarSupermercado" value="#{supermercado.supermercado}"
+						title="#{msg['label.editar']} #{supermercado.supermercado}">
+						<f:param name="id" value="#{supermercado.id}" />
+					</h:link>
+				</p:column>
+				
+			</p:dataTable>
+		</h:form>
+		<h:messages />
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	<persistence-unit name="appPrimeUnit" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      		<property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.charSet" value="UTF-8"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="adminavSAJKL"/>
+            <property name="hibernate.connection.password" value="PsdyQ2HQK5Xw"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://127.11.155.130:3306/"/>
+            <property name="hibernate.default_schema" value="supermercado"/>
+            <property name="show_sql" value="true" />
+        </properties>
+    </persistence-unit>
+    
+    <!-- persistence-unit name="appPrimeUnit" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/Supermercado</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      		<property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.charSet" value="UTF-8"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="3@22paje"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/supermercado"/>
+            <property name="hibernate.default_schema" value="supermercado"/>
+            <property name="show_sql" value="true" />
+        </properties>
+    </persistence-unit -->
+    
+</persistence>

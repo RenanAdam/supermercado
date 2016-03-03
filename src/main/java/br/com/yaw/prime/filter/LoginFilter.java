@@ -49,7 +49,8 @@ public class LoginFilter implements Filter {
 			request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
 			
 			if ((user != null)) {
-				// hresp.sendRedirect("/supermercado/faces/filtrarMercadorias.xhtml"); DESCOMENTAR PARA FUNCIONAR NO LOCALHOST
+				//DESCOMENTAR PARA FUNCIONAR NO LOCALHOST
+				//hresp.sendRedirect("/supermercado/faces/filtrarMercadorias.xhtml"); 
 				hresp.sendRedirect("/faces/filtrarMercadorias.xhtml");
 				return;
 			}
@@ -57,7 +58,8 @@ public class LoginFilter implements Filter {
 			request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
 			
 			if ((user == null)) {
-				//hresp.sendRedirect("/supermercado/faces/login.xhtml"); DESCOMENTAR PARA FUNCIONAR NO LOCALHOST
+				//DESCOMENTAR PARA FUNCIONAR NO LOCALHOST
+				//hresp.sendRedirect("/supermercado/faces/login.xhtml"); 
 				hresp.sendRedirect("/faces/login.xhtml");
 				return;
 			}
